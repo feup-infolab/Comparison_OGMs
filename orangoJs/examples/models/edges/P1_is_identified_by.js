@@ -1,11 +1,11 @@
-module.exports = ({ orango }) => {
+module.exports = ({orango}) => {
     const schema = new orango.Schema({
         message: String
     })
 
     schema.type('edge', {
         from: 'E24_physical_human_made_thing',
-        to: ['E42_identifier']
+        to: 'E42_identifier'
     })
 
     return orango.model('P1_is_identified_by', schema)

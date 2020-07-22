@@ -4,16 +4,16 @@ module.exports = async ({ orango }) => {
 
   // create query
   let query = P156_occupies.link(
-      { E24_physical_human_made_thing: '1', E42_identifier: '1' },
-      { message: 'This is the first comment' }
+      {E24_physical_human_made_thing: '1', E42_identifier: '1'},
+      {message: 'P156_occupies edge'}
   )
       .return(orango.return.one())
 
   // FOR DEMO ONLY - show the AQL
-  let aql = await query.toAQL(true)
-  console.log(aql.cyan)
-
-  // exec query
-  let rawData = await query.exec()
-  console.log('rawData'.green, rawData)
+  try {
+    let aql = await query.toAQL(true)
+    console.log(aql.cyan)
+  } catch (e) {
+    console.log('Error Caught!'.red, e.message)
+  }
 }

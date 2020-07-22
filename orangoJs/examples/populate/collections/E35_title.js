@@ -1,4 +1,4 @@
-module.exports = async ({ orango }) => {
+module.exports = async ({orango}) => {
     const E35_title = orango.model('E35_title')
     console.log(`✅  Populated__: "${E35_title.collectionName}" collection`.green)
 

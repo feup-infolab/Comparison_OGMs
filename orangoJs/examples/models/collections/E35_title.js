@@ -1,5 +1,5 @@
-module.exports = ({ orango }) => {
-    const { OPERATIONS, SCHEMA } = orango.consts
+module.exports = ({orango}) => {
+    const {OPERATIONS, SCHEMA} = orango.consts
 
     class E35_titleSchema extends orango.Schema {
         get getName() {
@@ -8,14 +8,16 @@ module.exports = ({ orango }) => {
     }
 
     const schema = new E35_titleSchema({
-        name: String,
+        name: {type: String, required: true},
+    }, {
+        strict: true
     })
 
     schema.addIndex(SCHEMA.INDEX.HASH, 'name')
 
     const E35_title = orango.model('E35_title', schema)
 
-    E35_title.findById = async function(id) {
+    E35_title.findById = async function (id) {
         return await this.find().byId(id)
     }
 

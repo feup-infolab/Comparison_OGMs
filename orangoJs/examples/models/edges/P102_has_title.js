@@ -1,4 +1,4 @@
-module.exports = ({ orango }) => {
+module.exports = ({orango}) => {
     const schema = new orango.Schema({
         message: String
     })

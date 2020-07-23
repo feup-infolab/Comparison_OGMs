@@ -18,7 +18,6 @@ module.exports = async ({orango}) => {
     console.log('rawData'.green, rawData)
 
 
-
     // create query
     let query2 = P48_has_preferred_identifier.link(
         {E24_physical_human_made_thing: '1', E42_identifier: '2'},
@@ -35,7 +34,6 @@ module.exports = async ({orango}) => {
     console.log('rawData'.green, rawData2)
 
     console.log("OrangoJs doesn't verify the cardinality of relations".red)
-
 
 
 }

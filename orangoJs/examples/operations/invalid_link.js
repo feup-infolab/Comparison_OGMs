@@ -4,7 +4,7 @@ module.exports = async ({orango}) => {
 
     // create query
     let query = P156_occupies.link(
-        {E24_physical_human_made_thing: '1', E1_crm_entitie: '1'},
+        {E24_physical_human_made_thing: '1', E1_crm_entity: '1'},
         {message: 'P156_occupies edge'}
     )
         .return(orango.return.one())
@@ -17,9 +17,4 @@ module.exports = async ({orango}) => {
         console.log('Error Caught!'.red, e.message)
     }
 }
-//
-// // exec query
-// let rawData = await query.exec()
-// console.log('rawData'.green, rawData)
-// }
 

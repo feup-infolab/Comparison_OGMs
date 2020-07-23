@@ -1,7 +1,26 @@
 module.exports = ({orango}) => {
     const {OPERATIONS, SCHEMA} = orango.consts
 
-    class E24_physical_human_made_thingSchema extends orango.Schema {
+
+    /*
+   tentei fazer extend dos schemas mas apenas é possivel fazer extende das funçoes
+     */
+
+    // class E1_crm_entitySchema extends orango.Schema {
+    //     get getName() {
+    //         return this.name;
+    //     }
+    // }
+    //
+    // const e1_crm_entitySchema = new E1_crm_entitySchema({
+    //     name: {type: String, required: true},
+    // }, {
+    //     strict: true
+    // })
+
+    // e1_crm_entitySchema.addIndex(SCHEMA.INDEX.HASH, 'name')
+
+    class E24_physical_human_made_thingSchema extends orango.Schema  {
         get getName() {
             return this.name;
         }

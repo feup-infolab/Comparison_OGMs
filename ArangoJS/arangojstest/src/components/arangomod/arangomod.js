@@ -8,29 +8,31 @@ const db = new Database({
 });
 
 async function main() {
-    /*let pokemons;
-    try {
-        pokemons = await db.query(aql`
-      FOR pokemon IN ${pokemons}
-      FILTER pokemon.type == "fire"
-      RETURN pokemon
-    `);
-        console.log("My pokemons, let me show you them:");
-        for await (const pokemon of pokemons) {
-            console.log(pokemon.name);
-        }
-    } catch (err) {
-        console.error(err.message);
-    }*/
+    
     const graph = db.graph('some-graph');
-    const info = await graph.create({
-        edgeDefinitions: [{
-            collection: 'edges',
-            from: ['start-vertices'],
-            to: ['end-vertices']
-        }]
-    });
-    console.log(info)
-}
+    const result = await graph.exists();
+    if(result){
+        const data = await graph.get();
+        console.log(data);
+    }
+    else {
+        const info = await graph.create({
+            edgeDefinitions: [{
+                collection: 'edges',
+                from: ['start-vertices'],
+                to: ['end-vertices']
+            }]
+        });
+        console.log(info);
+        }
+
+    const collection = graph.vertexCollection("vertices");
+    //const doc = await collection.save({ some: "data" });
+    console.log(collection.name);
+    await graph.addVertexCollection('vertices');
+    //console.log(doc);
+    const collections = await graph.listVertexCollections();
+    console.log(collections);
+    }
 
 main();

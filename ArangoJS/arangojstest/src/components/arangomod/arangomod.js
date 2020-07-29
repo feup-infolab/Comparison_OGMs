@@ -6,7 +6,6 @@ const db = new Database({
     database: "name",
     auth: { username: "root"},
 });
- pokemons = db.collection("my-pokemons");
 
 async function main() {
     /*let pokemons;
@@ -23,7 +22,14 @@ async function main() {
     } catch (err) {
         console.error(err.message);
     }*/
-    const info = await db.get();
+    const graph = db.graph('some-graph');
+    const info = await graph.create({
+        edgeDefinitions: [{
+            collection: 'edges',
+            from: ['start-vertices'],
+            to: ['end-vertices']
+        }]
+    });
     console.log(info)
 }
 

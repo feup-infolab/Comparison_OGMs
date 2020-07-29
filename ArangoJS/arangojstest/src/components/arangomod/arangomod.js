@@ -8,7 +8,7 @@ const db = new Database({
 });
 
 async function main() {
-    
+
     const graph = db.graph('some-graph');
     const result = await graph.exists();
     if(result){
@@ -29,10 +29,17 @@ async function main() {
     const collection = graph.vertexCollection("vertices");
     //const doc = await collection.save({ some: "data" });
     console.log(collection.name);
-    await graph.addVertexCollection('vertices');
     //console.log(doc);
     const collections = await graph.listVertexCollections();
     console.log(collections);
+    if(!collections.includes(collection.name))
+    await graph.addVertexCollection('vertices');
+
+    await graph.addEdgeDefinition({
+        collection: 'edges2',
+        from: ['vertices'],
+        to: ['vertices']
+    });
     }
 
 main();

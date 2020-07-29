@@ -35,11 +35,17 @@ async function main() {
     if(!collections.includes(collection.name))
     await graph.addVertexCollection('vertices');
 
-    await graph.addEdgeDefinition({
-        collection: 'edges2',
-        from: ['vertices'],
-        to: ['vertices']
-    });
+    const collections2 = await graph.listEdgeCollections();
+    if(!collections2.includes('edges2')){
+        await graph.addEdgeDefinition({
+            collection: 'edges2',
+            from: ['vertices'],
+            to: ['vertices']
+        });
     }
+
+    const doc = await collection.save({ some: "data" });
+    }
+
 
 main();

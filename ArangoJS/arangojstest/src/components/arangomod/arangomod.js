@@ -9,7 +9,7 @@ const db = new Database({
 
 async function main() {
 
-    const graph = db.graph('some-graph');
+    const graph = db.graph('some-graph3');
     const result = await graph.exists();
     if(result){
         const data = await graph.get();
@@ -27,16 +27,22 @@ async function main() {
         }
 
     const collection = graph.vertexCollection("vertices");
-    //const doc = await collection.save({ some: "data" });
-    console.log(collection.name);
-    //console.log(doc);
+    const collection2 = graph.vertexCollection("start-vertices");
+
+    const collection3 = graph.vertexCollection("end-vertices");
     const collections = await graph.listVertexCollections();
     console.log(collections);
     if(!collections.includes(collection.name))
-    await graph.addVertexCollection('vertices');
+        await graph.addVertexCollection('vertices');
 
-    const collections2 = await graph.listEdgeCollections();
-    if(!collections2.includes('edges2')){
+    const doc = await collection.save({ some: "data" });
+    console.log(collection.name);
+    console.log(doc);
+
+
+
+    const collections4 = await graph.listEdgeCollections();
+    if(!collections4.includes('edges2')){
         await graph.addEdgeDefinition({
             collection: 'edges2',
             from: ['vertices'],
@@ -44,7 +50,16 @@ async function main() {
         });
     }
 
-    const doc = await collection.save({ some: "data" });
+    const doc3 = await collection2.save({ some: "data" });
+    const doc2 = await collection3.save({ some: "data2" });
+
+    const ecollection = graph.edgeCollection("edges");
+    const edge = await ecollection.save(
+        { some: "data3" },
+        doc3._id,
+        doc2._id
+    );
+    console.log(edge);
     }
 
 

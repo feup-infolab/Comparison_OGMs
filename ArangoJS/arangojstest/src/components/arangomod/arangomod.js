@@ -62,5 +62,85 @@ async function main() {
     console.log(edge);
     }
 
+    async function experiment(){
+        const graph = db.graph('experiment-graph');
+        const result = await graph.exists();
+        if(result){
+            const data = await graph.get();
+            console.log(data);
+        }
+        else {
+            const info = await graph.create({
+                edgeDefinitions: [{
+                    collection: 'edges',
+                    from: ['start-vertices'],
+                    to: ['end-vertices']
+                }]
+            });
+            console.log(info);
+            const E1 = graph.vertexCollection("e1-crm-entity");
+            const E24 = graph.vertexCollection("e24-physical-human-made-thing");
+            const E35 = graph.vertexCollection("e35-title");
+            const E42 = graph.vertexCollection("e42-identifier");
+            const E53 = graph.vertexCollection("e53-place");
+            const E70 = graph.vertexCollection("e70-thing");
+
+            const collections = await graph.listVertexCollections();
+            console.log(collections);
+            if(!collections.includes(E1.name))
+                await graph.addVertexCollection('e1-crm-entity');
+            if(!collections.includes(E24.name))
+                await graph.addVertexCollection('e24-physical-human-made-thing');
+            if(!collections.includes(E35.name))
+                await graph.addVertexCollection('e35-title');
+            if(!collections.includes(E42.name))
+                await graph.addVertexCollection('e42-identifier');
+            if(!collections.includes(E53.name))
+                await graph.addVertexCollection('e53-place');
+            if(!collections.includes(E70.name))
+                await graph.addVertexCollection('e70-thing');
+
+            const edge_collections = await graph.listEdgeCollections();
+            if(!edge_collections.includes('p1-is-identified-by')){
+                await graph.addEdgeDefinition({
+                    collection: 'p1-is-identified-by',
+                    from: ['e24-physical-human-made-thing'],
+                    to: ['e42-identifier']
+                });
+            }
+            if(!edge_collections.includes('p48-has-preferred-identifier')){
+                await graph.addEdgeDefinition({
+                    collection: 'p48-has-preferred-identifier',
+                    from: ['e24-physical-human-made-thing'],
+                    to: ['e42-identifier']
+                });
+            }
+
+            if(!edge_collections.includes('p102-has-title')){
+                await graph.addEdgeDefinition({
+                    collection: 'p102-has-title',
+                    from: ['e24-physical-human-made-thing'],
+                    to: ['e35-title']
+                });
+            }
+
+            if(!edge_collections.includes('p130-shows-features-of')){
+                await graph.addEdgeDefinition({
+                    collection: 'p130-shows-features-of',
+                    from: ['e24-physical-human-made-thing'],
+                    to: ['e70-thing']
+                });
+            }
+
+            if(!edge_collections.includes('p156-occupies')){
+                await graph.addEdgeDefinition({
+                    collection: 'p156-occupies',
+                    from: ['e24-physical-human-made-thing'],
+                    to: ['e53-place']
+                });
+            }
+
+        }
+    }
 
 main();

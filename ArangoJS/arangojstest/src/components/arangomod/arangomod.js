@@ -273,7 +273,7 @@ let P1 = {
 };
 
 let P48 = {
-    async p1(e1,e42){
+    async p48(e1,e42){
         const edge_collections = await this.graph1.listEdgeCollections();
         if(!edge_collections.includes('p48-has-preferred-identifier')){
             await this.graph1.addEdgeDefinition({
@@ -293,7 +293,7 @@ let P48 = {
 };
 
 let P102 = {
-    async p1(e24,e35){
+    async p102(e24,e35){
         const edge_collections = await this.graph1.listEdgeCollections();
         if(!edge_collections.includes('p102-has-title')){
             await this.graph1.addEdgeDefinition({
@@ -313,7 +313,7 @@ let P102 = {
 };
 
 let P130 = {
-    async p1(e24,e70){
+    async p130(e24,e70){
         const edge_collections = await this.graph1.listEdgeCollections();
         if(!edge_collections.includes('p130-shows-features-of')){
             await this.graph1.addEdgeDefinition({
@@ -333,7 +333,7 @@ let P130 = {
 };
 
 let P156 = {
-    async p1(e24,e53){
+    async p156(e24,e53){
         const edge_collections = await this.graph1.listEdgeCollections();
         if(!edge_collections.includes('p156-occupies')){
             await this.graph1.addEdgeDefinition({
@@ -400,11 +400,25 @@ async function experiment2() {
     const E42Col = new E42_Identifier(graph,'e42-identifier');
     const E70Col = new E53_Place(graph,'e70-thing');
 
-    const doc = await E1Col.saveNode("E1");
-    const doc1 = await E24Col.saveNode("E24");
-    const doc2 = await E42Col.saveNode("E42");
+    const doc = await E1Col.saveNode("E1 of Test");
+    const doc1 = await E24Col.saveNode("Tokyo Tower");
+    const doc2 = await E42Col.saveNode("Id1");
+    const doc3 = await E42Col.saveNode("Id2");
+    const doc4 = await E35Col.saveNode("Tokyo Tower");
+    const doc5 = await E53Col.saveNode("Tokyo");
+    const doc6 = await E70Col.saveNode("Eiffel Tower");
+
+
     await E24Col.p1(doc1, doc2);
-    await E1Col.p1(doc,doc2);
+    await E24Col.p1(doc1,doc3);
+    await E24Col.p48(doc1,doc2);
+    await E24Col.p48(doc1,doc3);
+    await E24Col.p102(doc1,doc4);
+    await E24Col.p130(doc1,doc);
+    await E24Col.p130(doc1,doc6);
+    await E24Col.p156(doc1,doc5);
+
+
 
 
 

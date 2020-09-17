@@ -143,4 +143,91 @@ async function main() {
         }
     }
 
-main();
+    class E1_CRM_Entity{
+        constructor(graph1) {
+            this.graph1 = graph1;
+        }
+        async saveNode(name) {
+            const collections = await this.graph1.listVertexCollections();
+            const E1 = this.graph1.vertexCollection("e1-crm-entity");
+            if (!collections.includes(E1.name))
+                await this.graph1.addVertexCollection('e1-crm-entity');
+
+
+            const doc = E1.save({name: name});
+            console.log(doc);
+        }
+
+
+
+}
+
+class E24_Physical_Human_Made_Thing {
+    constructor(graph1) {
+        this.graph1 = graph1;
+    }
+
+    async saveNode(name) {
+        const collections = await this.graph1.listVertexCollections();
+        const E24 = this.graph1.vertexCollection("e24-physical-human-made-thing");
+        if (!collections.includes(E24.name))
+            await this.graph1.addVertexCollection('e24-physical-human-made-thing');
+
+
+        const doc = E24.save({name: name});
+        console.log(doc);
+    }
+
+    async p1(e42){
+        const edge_collections = await this.graph1.listEdgeCollections();
+        if(!edge_collections.includes('p1-is-identified-by')){
+            await this.graph1.addEdgeDefinition({
+                collection: 'p1-is-identified-by',
+                from: ['e24-physical-human-made-thing'],
+                to: ['e42-identifier']
+            });
+        }
+    }
+
+}
+
+class E42_Identifier {
+    constructor(graph1) {
+        this.graph1 = graph1;
+    }
+
+    async saveNode(name) {
+        const collections = await this.graph1.listVertexCollections();
+        const E42 = this.graph1.vertexCollection("e42-identifier");
+        if (!collections.includes(E42.name))
+            await this.graph1.addVertexCollection('e42-identifier');
+
+
+        const doc = E42.save({name: name});
+        console.log(doc);
+    }
+
+}
+
+async function experiment2() {
+    const graph = db.graph('experiment-graph2');
+    const result = await graph.exists();
+    if (result) {
+        const data = await graph.get();
+        console.log(data);
+    } else {
+        const info = await graph.create({
+            edgeDefinitions: [{
+                collection: 'edges',
+                from: ['start-vertices'],
+                to: ['end-vertices']
+            }]
+        });
+    }
+    const collections = await graph.listVertexCollections();
+
+    const E1Col = new E1_CRM_Entity(graph);
+    await E1Col.saveNode("E1");
+}
+
+experiment2();

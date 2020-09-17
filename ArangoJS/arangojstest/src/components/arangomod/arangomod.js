@@ -253,12 +253,12 @@ class E70_Thing {
 
 
 let P1 = {
-    async p1(e24,e42){
+    async p1(e1,e42){
         const edge_collections = await this.graph1.listEdgeCollections();
         if(!edge_collections.includes('p1-is-identified-by')){
             await this.graph1.addEdgeDefinition({
                 collection: 'p1-is-identified-by',
-                from: ['e24-physical-human-made-thing'],
+                from: ['e1-crm-entity'],
                 to: ['e42-identifier']
             });
         }
@@ -266,19 +266,19 @@ let P1 = {
         const collection = this.graph1.edgeCollection("p1-is-identified-by");
         const edge = await collection.save(
             { some: "data3" },
-            e24._id,
+            e1._id,
             e42._id
         );
     }
 };
 
 let P48 = {
-    async p1(e24,e42){
+    async p1(e1,e42){
         const edge_collections = await this.graph1.listEdgeCollections();
         if(!edge_collections.includes('p48-has-preferred-identifier')){
             await this.graph1.addEdgeDefinition({
                 collection: 'p48-has-preferred-identifier',
-                from: ['e24-physical-human-made-thing'],
+                from: ['e1-crm-entity'],
                 to: ['e42-identifier']
             });
         }
@@ -286,7 +286,7 @@ let P48 = {
         const collection = this.graph1.edgeCollection("p48-has-preferred-identifier");
         const edge = await collection.save(
             { some: "data3" },
-            e24._id,
+            e1._id,
             e42._id
         );
     }
@@ -354,6 +354,28 @@ let P156 = {
 
 Object.assign(E1_CRM_Entity.prototype, P1);
 Object.assign(E24_Physical_Human_Made_Thing.prototype, P1);
+Object.assign(E35_Title.prototype, P1);
+Object.assign(E53_Place.prototype, P1);
+Object.assign(E70_Thing.prototype, P1);
+Object.assign(E42_Identifier.prototype, P1);
+
+Object.assign(E1_CRM_Entity.prototype, P48);
+Object.assign(E24_Physical_Human_Made_Thing.prototype, P48);
+Object.assign(E35_Title.prototype, P48);
+Object.assign(E53_Place.prototype, P48);
+Object.assign(E70_Thing.prototype, P48);
+Object.assign(E42_Identifier.prototype, P48);
+
+Object.assign(E24_Physical_Human_Made_Thing.prototype, P102);
+Object.assign(E35_Title.prototype, P102);
+Object.assign(E42_Identifier.prototype, P102);
+
+Object.assign(E24_Physical_Human_Made_Thing.prototype, P130);
+Object.assign(E35_Title.prototype, P130);
+Object.assign(E42_Identifier.prototype, P130);
+
+Object.assign(E24_Physical_Human_Made_Thing.prototype, P156);
+
 
 async function experiment2() {
     const graph = db.graph('experiment-graph2');
@@ -373,7 +395,11 @@ async function experiment2() {
     }
     const E1Col = new E1_CRM_Entity(graph,'e1-crm-entity');
     const E24Col = new E24_Physical_Human_Made_Thing(graph,'e24-physical-human-made-thing');
+    const E35Col = new E35_Title(graph,'e35-title');
+    const E53Col = new E53_Place(graph,'e53-place');
     const E42Col = new E42_Identifier(graph,'e42-identifier');
+    const E70Col = new E53_Place(graph,'e70-thing');
+
     const doc = await E1Col.saveNode("E1");
     const doc1 = await E24Col.saveNode("E24");
     const doc2 = await E42Col.saveNode("E42");

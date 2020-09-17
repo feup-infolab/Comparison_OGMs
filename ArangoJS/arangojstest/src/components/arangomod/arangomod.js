@@ -177,6 +177,23 @@ class E24_Physical_Human_Made_Thing {
 
         return await E24.save({name: name});
     }
+}
+
+class E35_Title {
+    constructor(graph1,collectionName) {
+        this.graph1 = graph1;
+        this.collectionName = collectionName
+    }
+
+    async saveNode(name) {
+        const collections = await this.graph1.listVertexCollections();
+        const E35 = this.graph1.vertexCollection( this.collectionName);
+        if (!collections.includes(E35.name))
+            await this.graph1.addVertexCollection(this.collectionName);
+
+
+        return await E35.save({name: name});
+    }
 
 
 
@@ -200,6 +217,41 @@ class E42_Identifier {
 
 }
 
+class E53_Place {
+    constructor(graph1,collectionName) {
+        this.graph1 = graph1;
+        this.collectionName = collectionName
+    }
+
+    async saveNode(name) {
+        const collections = await this.graph1.listVertexCollections();
+        const E53 = this.graph1.vertexCollection( this.collectionName);
+        if (!collections.includes(E53.name))
+            await this.graph1.addVertexCollection(this.collectionName);
+
+
+        return await E53.save({name: name});
+    }
+}
+
+class E70_Thing {
+    constructor(graph1,collectionName) {
+        this.graph1 = graph1;
+        this.collectionName = collectionName
+    }
+
+    async saveNode(name) {
+        const collections = await this.graph1.listVertexCollections();
+        const E70 = this.graph1.vertexCollection( this.collectionName);
+        if (!collections.includes(E70.name))
+            await this.graph1.addVertexCollection(this.collectionName);
+
+
+        return await E70.save({name: name});
+    }
+}
+
+
 let P1 = {
     async p1(e24,e42){
         const edge_collections = await this.graph1.listEdgeCollections();
@@ -216,6 +268,86 @@ let P1 = {
             { some: "data3" },
             e24._id,
             e42._id
+        );
+    }
+};
+
+let P48 = {
+    async p1(e24,e42){
+        const edge_collections = await this.graph1.listEdgeCollections();
+        if(!edge_collections.includes('p48-has-preferred-identifier')){
+            await this.graph1.addEdgeDefinition({
+                collection: 'p48-has-preferred-identifier',
+                from: ['e24-physical-human-made-thing'],
+                to: ['e42-identifier']
+            });
+        }
+
+        const collection = this.graph1.edgeCollection("p48-has-preferred-identifier");
+        const edge = await collection.save(
+            { some: "data3" },
+            e24._id,
+            e42._id
+        );
+    }
+};
+
+let P102 = {
+    async p1(e24,e35){
+        const edge_collections = await this.graph1.listEdgeCollections();
+        if(!edge_collections.includes('p102-has-title')){
+            await this.graph1.addEdgeDefinition({
+                collection: 'p102-has-title',
+                from: ['e24-physical-human-made-thing'],
+                to: ['e35-title']
+            });
+        }
+
+        const collection = this.graph1.edgeCollection("p102-has-title");
+        const edge = await collection.save(
+            { some: "data3" },
+            e24._id,
+            e35._id
+        );
+    }
+};
+
+let P130 = {
+    async p1(e24,e70){
+        const edge_collections = await this.graph1.listEdgeCollections();
+        if(!edge_collections.includes('p130-shows-features-of')){
+            await this.graph1.addEdgeDefinition({
+                collection: 'p130-shows-features-of',
+                from: ['e24-physical-human-made-thing'],
+                to: ['e70-thing']
+            });
+        }
+
+        const collection = this.graph1.edgeCollection("p130-shows-features-of");
+        const edge = await collection.save(
+            { some: "data3" },
+            e24._id,
+            e70._id
+        );
+    }
+};
+
+let P156 = {
+    async p1(e24,e53){
+        const edge_collections = await this.graph1.listEdgeCollections();
+        if(!edge_collections.includes('p156-occupies')){
+            await this.graph1.addEdgeDefinition({
+                collection: 'p156-occupies',
+                from: ['e24-physical-human-made-thing'],
+                to: ['e53-place']
+            });
+        }
+
+        const collection = this.graph1.edgeCollection("p156-occupies");
+        const edge = await collection.save(
+            { some: "data3" },
+            e24._id,
+            e53._id
         );
     }
 };
@@ -245,10 +377,10 @@ async function experiment2() {
     const doc = await E1Col.saveNode("E1");
     const doc1 = await E24Col.saveNode("E24");
     const doc2 = await E42Col.saveNode("E42");
-    const edge = await E24Col.p1(doc1, doc2);
-    const edge2 = await E1Col.p1(doc,doc2);
+    await E24Col.p1(doc1, doc2);
+    await E1Col.p1(doc,doc2);
 
-    console.log(edge);
+
 
 }
 

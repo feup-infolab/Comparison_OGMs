@@ -144,18 +144,18 @@ async function main() {
     }
 
     class E1_CRM_Entity{
-        constructor(graph1) {
+        constructor(graph1,collectionName) {
             this.graph1 = graph1;
+            this.collectionName = collectionName
         }
         async saveNode(name) {
             const collections = await this.graph1.listVertexCollections();
-            const E1 = this.graph1.vertexCollection("e1-crm-entity");
+            const E1 = this.graph1.vertexCollection(this.collectionName);
             if (!collections.includes(E1.name))
-                await this.graph1.addVertexCollection('e1-crm-entity');
+                await this.graph1.addVertexCollection(this.collectionName);
 
 
-            const doc = E1.save({name: name});
-            console.log(doc);
+            return await E1.save({name: name});
         }
 
 
@@ -163,22 +163,45 @@ async function main() {
 }
 
 class E24_Physical_Human_Made_Thing {
-    constructor(graph1) {
+    constructor(graph1,collectionName) {
         this.graph1 = graph1;
+        this.collectionName = collectionName
     }
 
     async saveNode(name) {
         const collections = await this.graph1.listVertexCollections();
-        const E24 = this.graph1.vertexCollection("e24-physical-human-made-thing");
+        const E24 = this.graph1.vertexCollection( this.collectionName);
         if (!collections.includes(E24.name))
-            await this.graph1.addVertexCollection('e24-physical-human-made-thing');
+            await this.graph1.addVertexCollection(this.collectionName);
 
 
-        const doc = E24.save({name: name});
-        console.log(doc);
+        return await E24.save({name: name});
     }
 
-    async p1(e42){
+
+
+}
+
+class E42_Identifier {
+    constructor(graph1,collectionName) {
+        this.graph1 = graph1;
+        this.collectionName = collectionName
+    }
+
+    async saveNode(name) {
+        const collections = await this.graph1.listVertexCollections();
+        const E42 = this.graph1.vertexCollection(this.collectionName);
+        if (!collections.includes(E42.name))
+            await this.graph1.addVertexCollection(this.collectionName);
+
+
+        return await E42.save({name: name});
+    }
+
+}
+
+let P1 = {
+    async p1(e24,e42){
         const edge_collections = await this.graph1.listEdgeCollections();
         if(!edge_collections.includes('p1-is-identified-by')){
             await this.graph1.addEdgeDefinition({
@@ -187,27 +210,18 @@ class E24_Physical_Human_Made_Thing {
                 to: ['e42-identifier']
             });
         }
+
+        const collection = this.graph1.edgeCollection("p1-is-identified-by");
+        const edge = await collection.save(
+            { some: "data3" },
+            e24._id,
+            e42._id
+        );
     }
+};
 
-}
-
-class E42_Identifier {
-    constructor(graph1) {
-        this.graph1 = graph1;
-    }
-
-    async saveNode(name) {
-        const collections = await this.graph1.listVertexCollections();
-        const E42 = this.graph1.vertexCollection("e42-identifier");
-        if (!collections.includes(E42.name))
-            await this.graph1.addVertexCollection('e42-identifier');
-
-
-        const doc = E42.save({name: name});
-        console.log(doc);
-    }
-
-}
+Object.assign(E1_CRM_Entity.prototype, P1);
+Object.assign(E24_Physical_Human_Made_Thing.prototype, P1);
 
 async function experiment2() {
     const graph = db.graph('experiment-graph2');
@@ -223,11 +237,19 @@ async function experiment2() {
                 to: ['end-vertices']
             }]
         });
-    }
-    const collections = await graph.listVertexCollections();
 
-    const E1Col = new E1_CRM_Entity(graph);
-    await E1Col.saveNode("E1");
+    }
+    const E1Col = new E1_CRM_Entity(graph,'e1-crm-entity');
+    const E24Col = new E24_Physical_Human_Made_Thing(graph,'e24-physical-human-made-thing');
+    const E42Col = new E42_Identifier(graph,'e42-identifier');
+    const doc = await E1Col.saveNode("E1");
+    const doc1 = await E24Col.saveNode("E24");
+    const doc2 = await E42Col.saveNode("E42");
+    const edge = await E24Col.p1(doc1, doc2);
+    const edge2 = await E1Col.p1(doc,doc2);
+
+    console.log(edge);
+
 }
 
 experiment2();

@@ -3,6 +3,7 @@ const inquirer = require('inquirer')
 const di = require('./helpers/di')
 const setup = require('./setup')
 const config = require('./config')
+const moment = require('moment')
 
 require('colors')
 
@@ -37,11 +38,30 @@ inquirer
     }
   ])
   .then(async ({ snippet }) => {
-    if (snippet.match(/connect/gi)) {
-      const orango = require('../lib')
-      di.injectFile(__dirname + '/operations/' + snippet, { orango, config })
+    console.log(snippet)
+    const past = moment(new Date())
+    const orango = await setup(config)
+
+
+    if (snippet.match(/remove records/g)) {
+      const number = snippet.match(/\d+/g)[0]
+
+      let i=0;
+
+      while (i < number) {
+
+        await di.injectDir(__dirname + '/removeRecords/collections', { orango, config })
+        await di.injectDir(__dirname + '/removeRecords/edges', { orango, config })
+
+        i++
+        console.log("populated database and removed all records " + i + "times")
+      }
+
     } else {
-      const orango = await setup(config)
-      di.injectFile(__dirname + '/operations/' + snippet, { orango, config })
+      await di.injectFile(__dirname + '/operations/' + snippet, { orango, config })
     }
+    const now = moment(new Date())
+    const duration = moment.duration(now.diff(past))
+    console.log(' Duration:' + duration.asSeconds() + "/s")
+
   })

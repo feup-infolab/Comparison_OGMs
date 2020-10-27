@@ -40,8 +40,8 @@ module.exports = async function(config) {
 
   } else {
     // initialze models and inject db
-    di.injectDir(__dirname + '/models/collections', { orango: db, config })
-    di.injectDir(__dirname + '/models/edges', { orango: db, config })
+     di.injectDir(__dirname + '/models/collections', { orango: db, config })
+     di.injectDir(__dirname + '/models/edges', { orango: db, config })
 
     // connect to db
     await db.connect(config.default)
@@ -50,6 +50,9 @@ module.exports = async function(config) {
   // populate collections
   await di.injectDir(__dirname + '/populate/collections', { orango: db, config })
   await di.injectDir(__dirname + '/populate/edges', { orango: db, config })
+  console.log("populated database")
+
+
 
 
   return db

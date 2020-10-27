@@ -70,3 +70,6 @@ typings/
 
 # other
 *__dep*
+
+# any node modules folders
+node_modules

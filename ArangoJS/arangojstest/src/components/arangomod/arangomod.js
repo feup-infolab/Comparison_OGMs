@@ -9,6 +9,7 @@ const db = new Database({
 
 async function main() {
 
+
     const graph = db.graph('some-graph3');
     const result = await graph.exists();
     if(result){
@@ -379,6 +380,7 @@ Object.assign(E24_Physical_Human_Made_Thing.prototype, P156);
 
 async function experiment2() {
     const graph = db.graph('experiment-graph2');
+
     const result = await graph.exists();
     if (result) {
         const data = await graph.get();
@@ -419,9 +421,20 @@ async function experiment2() {
     await E24Col.p156(doc1,doc5);
 
 
-
+    await graph.drop(true)
 
 
 }
 
-experiment2();
+async function repeatexp() {
+    let i;
+    let d1 = new Date().getTime();
+    for (i = 0; i < 1000; i++) {
+        console.log("Try " + i)
+        await experiment2();
+    }
+    let d2 = new Date().getTime();
+    console.log(d2-d1);
+}
+
+repeatexp();

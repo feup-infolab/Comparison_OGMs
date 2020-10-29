@@ -421,20 +421,27 @@ async function experiment2() {
     await E24Col.p156(doc1,doc5);
 
 
-    await graph.drop(true)
+    await graph.drop()
 
 
 }
 
 async function repeatexp() {
     let i;
-    let d1 = new Date().getTime();
-    for (i = 0; i < 1000; i++) {
-        console.log("Try " + i)
+    let j;
+    var list = [];
+    for(j = 0; j < 5; j++){
+        let d1 = new Date().getTime();
+    for (i = 0; i < 10000; i++) {
+        console.log("Try " + i);
         await experiment2();
     }
-    let d2 = new Date().getTime();
-    console.log(d2-d1);
+        let d2 = new Date().getTime();
+        let d3 = d2-d1;
+        list.push(d3);
+    }
+    console.log(list)
+
 }
 
 repeatexp();

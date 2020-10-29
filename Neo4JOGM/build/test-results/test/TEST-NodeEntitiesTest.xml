@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="NodeEntitiesTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2020-10-29T09:42:51" hostname="DESKTOP-JCG440H" time="9.012">
+  <properties/>
+  <testcase name="relationshipTest" classname="NodeEntitiesTest" time="9.012"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[Oct 29, 2020 9:42:55 AM com.sun.jersey.server.impl.application.WebApplicationImpl _initiate
+INFO: Initiating Jersey application, version 'Jersey: 1.19.3 10/24/2016 03:43 PM'
+Oct 29, 2020 9:42:55 AM com.sun.jersey.server.impl.application.WebApplicationImpl _initiate
+INFO: Initiating Jersey application, version 'Jersey: 1.19.3 10/24/2016 03:43 PM'
+Oct 29, 2020 9:42:56 AM com.sun.jersey.server.impl.application.WebApplicationImpl _initiate
+INFO: Initiating Jersey application, version 'Jersey: 1.19.3 10/24/2016 03:43 PM'
+SLF4J: Failed to load class "org.slf4j.impl.StaticLoggerBinder".
+SLF4J: Defaulting to no-operation (NOP) logger implementation
+SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further details.
+Oct 29, 2020 9:42:56 AM org.neo4j.driver.internal.logging.JULogger info
+INFO: Direct driver instance 978868161 created for server address 127.0.0.1:53144
+]]></system-err>
+</testsuite>

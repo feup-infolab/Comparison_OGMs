@@ -1,0 +1,1 @@
+RESIST: 14 physical; RESIST: 14 acid; RESIST: 14 cold; RESIST: 14 electricity; RESIST: 14 fire; RESIST: 14 sonic; RESIST: 14 positive; RESIST: 14 negative; RESIST: 14 force; RESIST: 14 evil; RESIST: 14 good; RESIST: 14 chaotic; RESIST: 14 lawful; RESIST: 14 mental; RESIST: 14 poison;
